@@ -23,27 +23,32 @@
 
     - média de peso
     - maior idade
+    
     Se houver alguma entrada com idade menor que 12, não deve ser considerada.
-
-
 
 1. Escreva um script quer faça o controle de estoque de uma loja. Em um menu deve ter as opções:
 
-- cadastrar produto
-- vender produto
-- gerar relatório
+    - cadastrar produto
+    - vender produto
+    - gerar relatório
 
     Na opção de cadastro o utilizador deve entrar com:
 
-- nome do produto
-- preço
-- tipo
+    - nome do produto
+    - preço
+    - tipo
 
     Para cada produto cadastrado deve ser gerado um código. Na opção vender produto deve registrar uma venda do produto. E na opção gerar relatório deve mostrar o valor total ganho e a média por tipo de produto.
 
+12. Escreva uma função que dado um vetor calcule sua somatório e média.
 
-12. Escreva um script que receba uma matrix (m,n) e crie um vetor de tamanho m com o menor valor de cada linha.
+1. Escreva uma função que dado um valor `n` crie um vetor com `n` posições aleatórias.
 
+1. Escreva um script que dado dois vetores indique os elementos que estão presentes nos dois vetores.
+
+1. Escreva um script que receba uma matrix `(m,n)` e crie um vetor de tamanho `m` com o menor valor de cada linha.
+
+1. Escreva um script que receba uma matrix `(m,n)` e para cada linha retorne minínimo e máximo.
 
 1. Escreva uma função que multiplique duas matrizes.
 

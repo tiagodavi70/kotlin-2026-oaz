@@ -96,7 +96,7 @@ Evite mutável se não precisar:
 val lista = mutableListOf("A", "B", "C")
 ```
 
-# 15. Siga padrão consistente de formatação
+# Siga padrão consistente de formatação
 
 * Indentação de espaços consistente no código fonte
 * Uma responsabilidade por função

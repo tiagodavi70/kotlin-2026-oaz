@@ -141,7 +141,7 @@ internal class ContaBancaria(
         }
 
     init {
-        require(numeroConta.size == 10) {
+        require(numeroConta.length == 10) {
             "Número da conta deve ter 10 dígitos."
         }
 

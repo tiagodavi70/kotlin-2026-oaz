@@ -1,13 +1,10 @@
 # Exercícios
 
-1. Escreva classes em Kotlin para as seguintes entidades:
-   `Animal`, `Homem`, `Casa`, `Cachorro`, `Casa`, `Comodo`
-
-Cada classe deve ter três atributos no mínimo.
+1. Escreva classes em Kotlin para as seguintes entidades:  `Animal`, `Homem`, `Casa`, `Cachorro`, `Comodo`. Cada classe deve ter três atributos no mínimo.
 
 2. Crie uma classe chamada `Carro` com os atributos `marca`, `modelo`, `velocidade` e `ano`. Crie um método que exiba essas informações. Depois, crie quatro objetos e mostre seus dados.
 
-3. Utilizando a classe da questão anterior crie um método idade para calcular a idade do carro e um método conversão para converter de `Km/h` para `MPH`. ('x' km = (0.62137x) milhas) 
+3. Utilizando a classe da questão anterior crie um método idade para calcular a idade do carro e um método conversão para converter de `Km/h` para `MPH`. (1 km = 0.62137 milhas) 
 
 4. Refazer o seguinte exercício utilizando orientação a objetos:
 

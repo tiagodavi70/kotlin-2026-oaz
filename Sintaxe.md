@@ -32,6 +32,20 @@ Ruim:
 val qdp = 10
 ```
 
+# Funções em PascalCase
+
+Correto:
+```kotlin
+class Usuario()
+class CarroEletrico()
+```
+
+Incorreto:
+```kotlin
+class usuario()
+class carro_eletrico()
+```
+
 # Funções em camelCase ou utilizando _
 
 Funções devem indicar ação.
@@ -41,6 +55,8 @@ Correto:
 ```kotlin
 fun calcularTotal(): Double
 fun buscarUsuario(): Usuario
+
+fun calcular_total(): Double
 ```
 
 Incorreto:

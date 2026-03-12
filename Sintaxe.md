@@ -1,6 +1,6 @@
 # Padrões de sintaxe e grafia
 
-# Prefira `val` ao invés de `var`
+## Prefira `val` ao invés de `var`
 
 Use imutabilidade sempre que possível.
 
@@ -16,7 +16,7 @@ Evite quando não precisar:
 var nome = "Carlos"
 ```
 
-# Use nomes descritivos
+## Use nomes descritivos
 
 Evite abreviações desnecessárias.
 
@@ -32,7 +32,7 @@ Ruim:
 val qdp = 10
 ```
 
-# Funções em PascalCase
+## Funções em PascalCase
 
 Correto:
 ```kotlin
@@ -46,7 +46,7 @@ class usuario()
 class carro_eletrico()
 ```
 
-# Funções em camelCase ou utilizando _
+## Funções em camelCase ou utilizando _
 
 Funções devem indicar ação.
 
@@ -66,8 +66,25 @@ fun Total()
 fun Usuario()
 ```
 
+## Separe com espaços depois de operadores ou vírgulas
 
-# Evite classes grandes demais
+Facilita legibilidade.
+
+Correto:
+
+```kotlin
+val b = 10.0
+soma(1, 2)
+```
+
+Incorreto:
+
+```kotlin
+val b=10.0
+soma(1,2)
+```
+
+## Evite classes grandes demais
 
 Se uma classe faz muitas coisas, divida responsabilidades.
 
@@ -98,7 +115,7 @@ object Configuracao {
 }
 ```
 
-# Prefira coleções imutáveis
+## Prefira coleções imutáveis
 
 Recomendado:
 
@@ -112,7 +129,7 @@ Evite mutável se não precisar:
 val lista = mutableListOf("A", "B", "C")
 ```
 
-# Siga padrão consistente de formatação
+## Siga padrão consistente de formatação
 
 * Indentação de espaços consistente no código fonte
 * Uma responsabilidade por função

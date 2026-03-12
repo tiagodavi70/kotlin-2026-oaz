@@ -32,12 +32,12 @@ fun main() {
 }
 ```
 
-# Classes Abstratas em Kotlin
+## Classes Abstratas em Kotlin
 
 Classes abstratas não podem ser instanciadas diretamente e podem conter métodos abstratos e concretos.
 
 
-## Classe Abstrata
+### Classe Abstrata
 
 ```kotlin
 abstract class Animal(val nome: String) {
@@ -50,7 +50,7 @@ abstract class Animal(val nome: String) {
 }
 ```
 
-## Implementação de Classe Abstrata 
+### Implementação de Classe Abstrata 
 
 A implementação é por meio de herança.
 
@@ -63,7 +63,7 @@ class Cachorro(nome: String) : Animal(nome) {
 }
 ```
 
-## Uso Comun
+### Uso Comun
 
 ```kotlin
 fun main() {
@@ -73,12 +73,12 @@ fun main() {
 }
 ```
 
-# Interfaces em Kotlin
+## Interfaces em Kotlin
 
 Interfaces definem comportamentos que as classes devem implementar.
 
 
-## Interface Simples
+### Interface Simples
 
 ```kotlin
 interface Voador {
@@ -86,7 +86,7 @@ interface Voador {
 }
 ```
 
-## Interface com Implementação Padrão
+### Interface com Implementação Padrão
 
 ```kotlin
 interface Nadador {
@@ -97,7 +97,7 @@ interface Nadador {
 ```
 
 
-## Implementação de Interfaces
+### Implementação de Interfaces
 
 ```kotlin
 class Pato : Voador, Nadador {
@@ -108,7 +108,7 @@ class Pato : Voador, Nadador {
 }
 ```
 
-## Uso comum
+### Uso comum
 
 ```kotlin
 fun main() {
@@ -118,11 +118,11 @@ fun main() {
 }
 ```
 
-# Polimorfismo em Kotlin
+## Polimorfismo em Kotlin
 
 Polimorfismo permite tratar objetos diferentes através de um mesmo tipo base.
 
-## Polimorfismo com Herança
+### Polimorfismo com Herança
 
 ```kotlin
 open class Funcionario(val nome: String, var salario: Double) {
@@ -161,7 +161,7 @@ fun main() {
 
 Mesmo sendo do tipo `Funcionario`, o método correto é executado em tempo de execução.
 
-## Polimorfismo com Interface
+### Polimorfismo com Interface
 
 ```kotlin
 interface Pagavel {
@@ -187,13 +187,12 @@ class Empregado(val salarioMensal: Double) : Pagavel {
 }
 ```
 
-
-# Controle de Acesso em Kotlin
+## Controle de Acesso em Kotlin
 
 Modificadores de visibilidade controlam onde elementos podem ser acessados.
 
 
-## Tabela de Modificadores
+### Tabela de Modificadores
 
 | Modificador | Visibilidade                |
 | ----------- | --------------------------- |
@@ -203,7 +202,7 @@ Modificadores de visibilidade controlam onde elementos podem ser acessados.
 | `internal`  | Mesmo módulo                |
 
 
-## Uso comun
+### Uso comun
 
 ```kotlin
 open class Pessoa(public val nome: String, protected var idade: Int, private val cpf: String) {

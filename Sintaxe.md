@@ -32,7 +32,7 @@ Ruim:
 val qdp = 10
 ```
 
-## Funções em PascalCase
+## Classes em PascalCase
 
 Correto:
 ```kotlin

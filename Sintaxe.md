@@ -7,13 +7,33 @@ Use imutabilidade sempre que possível.
 Bom:
 
 ```kotlin
-val nome = "Carlos"
+val nome: String = "Carlos"
 ```
 
 Evite quando não precisar:
 
 ```kotlin
-var nome = "Carlos"
+var nome: String = "Carlos"
+```
+
+## Indique os tipos de variáveis primitivas
+
+Use os tipos primitovs sempre.
+
+Bom:
+
+```kotlin
+val nome: String = "Carlos"
+val a: Int = 10
+val num: Double = 5.0 
+```
+
+Incorreto:
+
+```kotlin
+val nome = "Carlos"
+val a = 10
+val num = 5.0 
 ```
 
 ## Use nomes descritivos
@@ -23,7 +43,7 @@ Evite abreviações desnecessárias.
 Bom:
 
 ```kotlin
-val quantidadeDeProdutos = 10
+val quantidadeDeProdutos: Int = 10
 ```
 
 Ruim:

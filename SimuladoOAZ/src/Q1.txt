@@ -1,0 +1,9 @@
+a) Uma instância de uma classe.
+b) :
+c) Modular por (módulo)
+d) val indica imutabilidade e var indica mutabilidade
+e) Uma classe abstrata pode ter atributos concretos
+f)
+ Herança - Funcionario para gerente
+ Polimorfismo - Salário
+ Criação de objetos e utilização de construtores

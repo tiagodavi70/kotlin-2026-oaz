@@ -1,6 +1,7 @@
 package pt.transporte
 
 import io.ktor.server.application.*
+import pt.transporte.comboio.roteamento.configureLinha
 import pt.transporte.comboio.roteamento.configureUtilizador
 
 fun main(args: Array<String>) {
@@ -15,4 +16,5 @@ fun Application.module() {
     configureRouting()
 
     configureUtilizador()
+    configureLinha()
 }

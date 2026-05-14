@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import pt.transporte.comboio.DButils
+import pt.transporte.comboio.utils.DButils
 
 @Serializable
 data class RegiaoExposed(val id: Int, val nome: String, val abreviatura: String) {

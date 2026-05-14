@@ -82,11 +82,11 @@ class LinhaServico(database: Database) {
         }
     }
 
-    suspend fun ler(id: Int): List<LinhaExposed> {
+    suspend fun ler(id: Int): LinhaExposed? {
         return DButils.dbQuery {
             (Linha innerJoin LinhaParagem innerJoin Paragem)
                 .selectAll()
-                .where { Linha.id eq id }
+                .where { Linha.id eq id } // otimizar
                 .groupBy { it[Linha.id] }
                 .map { (idLinha, linhas) ->
                     LinhaExposed(idLinha, linhas.first()[Linha.nome],
@@ -96,7 +96,7 @@ class LinhaServico(database: Database) {
                             )
                         }
                     )
-                }
+                }.singleOrNull()
         }
     }
 }

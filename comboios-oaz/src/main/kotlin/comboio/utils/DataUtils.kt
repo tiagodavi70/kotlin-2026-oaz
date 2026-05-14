@@ -11,6 +11,8 @@ import pt.transporte.comboio.linha.ParagemExposed
 import pt.transporte.comboio.linha.ParagemServico
 import pt.transporte.comboio.pessoa.PessoaExposed
 import pt.transporte.comboio.pessoa.PessoaServico
+import pt.transporte.comboio.viagem.ViagemExposed
+import pt.transporte.comboio.viagem.ViagemServico
 
 
 fun main() {
@@ -62,19 +64,27 @@ fun main() {
         LugarExposed(-1, assento, comboio)
     }
 
+
     val paragemServico = ParagemServico(DButils.database)
     val pessoaServico = PessoaServico(DButils.database)
     val linhaServico = LinhaServico(DButils.database)
     val lugarServico = LugarServico(DButils.database)
     val comboioServico = ComboioServico(DButils.database)
+    val viagemServico = ViagemServico(DButils.database)
 
     runBlocking {
         utilizadores.forEach { pessoaServico.criar(it) }
         paragensAveiro.forEach { paragemServico.criar(it) }
         linhaServico.criar(linhaAveiro)
 
-        val comboio = comboioServico.criar(comboio)
-        val novosLugares = lugares.map { LugarExposed(it.id, it.assento, comboioServico.lerSemLugar(comboio)!!) }
+        val comboioId = comboioServico.criar(comboio)
+        val novosLugares = lugares.map { LugarExposed(it.id, it.assento, comboioServico.lerSemLugar(comboioId)!!) }
         novosLugares.forEach { lugarServico.criar(it) }
+
+        val linha = linhaServico.ler(1)!!
+        val comboio = comboioServico.ler(comboioId)!!
+        val viagens = listOf(ViagemExposed(-1, linha, comboio, 'I'))
+
+        viagens.forEach { viagemServico.criar(it) }
     }
 }

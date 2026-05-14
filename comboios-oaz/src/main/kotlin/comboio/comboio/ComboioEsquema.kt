@@ -11,7 +11,18 @@ import pt.transporte.comboio.utils.DButils
 import pt.transporte.comboio.comboio.LugarServico.Lugar
 
 @Serializable
-data class ComboioExposed(val id: Int, val modelo: String, val lugares: List<LugarExposed> = emptyList())
+data class ComboioExposed(val id: Int, val modelo: String, val lugares: List<LugarExposed> = emptyList()) {
+
+//    val listaLugares: List<LugarExposed>
+//        get() {
+//            return transaction {
+//                Lugar.selectAll()
+//                    .where { Lugar.comboio eq  }
+//                    .map { LugarExposed(it) }
+//            }
+//        }
+}
+
 
 class ComboioServico(database: Database) {
     object Comboio: Table() {

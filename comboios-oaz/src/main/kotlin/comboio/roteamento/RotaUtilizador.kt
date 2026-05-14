@@ -2,23 +2,21 @@ package pt.transporte.comboio.roteamento
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
-import io.ktor.server.http.httpDateFormat
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respond
-import io.ktor.server.response.respondText
 import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
-import pt.transporte.comboio.Utilizador
+import pt.transporte.comboio.pessoa.PessoaExposed
 
 fun Application.configureUtilizador() {
 
-    val utilizadores = mutableListOf<Utilizador>(
-        Utilizador("Tiago", "9999999"),
-        Utilizador("Davi", "98989898"),
-        Utilizador("Izabella", "878787878")
+    val utilizadores = mutableListOf<PessoaExposed>(
+        PessoaExposed("Tiago", "9999999"),
+        PessoaExposed("Davi", "98989898"),
+        PessoaExposed("Izabella", "878787878")
     )
 
     routing {
@@ -46,7 +44,7 @@ fun Application.configureUtilizador() {
             val nif: String? = params["nif"]
 
             if (nome != null && nif != null) {
-                call.respond(Utilizador(nome, nif))
+                call.respond(PessoaExposed(nome, nif))
             } else {
                 call.respond(HttpStatusCode.BadRequest)
             }
@@ -58,8 +56,8 @@ fun Application.configureUtilizador() {
             val nif: String? = params.get("nif")
 
             if (nome != null && nif != null) {
-                val utilizador = Utilizador(nome, nif)
-                utilizadores.add(utilizador)
+                val pessoaExposed = PessoaExposed(nome, nif)
+                utilizadores.add(pessoaExposed)
                 call.respond(HttpStatusCode.Created)
             }else {
                 call.respond(HttpStatusCode.BadRequest)
@@ -75,7 +73,7 @@ fun Application.configureUtilizador() {
 
             if (nome != null && nif != null &&
                 id != null && id in 0..<utilizadores.size) {
-                utilizadores[id] = Utilizador(nome, nif)
+                utilizadores[id] = PessoaExposed(nome, nif)
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.BadRequest)

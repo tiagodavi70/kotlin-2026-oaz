@@ -11,12 +11,11 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
-import pt.transporte.comboio.DButils
-import pt.transporte.comboio.linha.RegiaoServico.Regiao
+import pt.transporte.comboio.utils.DButils
 
 @Serializable
 data class ParagemExposed(val id: Int, val nome: String,
-                          val regiao: RegiaoExposed, val estacao: Boolean = true) {
+                          val distrito: String, val estacao: Boolean = true) {
     init {
         require(nome.length >= 3) { "Nome muito pequeno (< 3)" }
     }
@@ -28,7 +27,7 @@ class ParagemServico(database: Database) {
         val id = integer("id").autoIncrement()
         val nome = varchar("nome", 50)
         val estacao = bool("estacao")
-        val regiao = reference("regiaoId", Regiao.id)
+        val distrito = varchar("distrito", 15)
 
         override val primaryKey = PrimaryKey(id)
     }
@@ -39,44 +38,33 @@ class ParagemServico(database: Database) {
         }
     }
 
-    // funções de operação - atualizar e apagar
     suspend fun criar(paragem: ParagemExposed) {
         DButils.dbQuery {
             Paragem.insert {
                 it[nome] = paragem.nome
                 it[estacao] = paragem.estacao
-                it[regiao] = paragem.regiao.id
+                it[distrito] = paragem.distrito
             }
         }
     }
 
     suspend fun ler(): List<ParagemExposed> {
         return DButils.dbQuery {
-            (Paragem innerJoin Regiao).selectAll()
+            Paragem.selectAll()
                 .map {
-                    val regiaoJoin = RegiaoExposed(
-                        it[Regiao.id],
-                        it[Regiao.nome],
-                        it[Regiao.abreviatura]
-                    )
                     ParagemExposed(it[Paragem.id], it[Paragem.nome],
-                        regiaoJoin,  it[Paragem.estacao] )
+                        it[Paragem.distrito],  it[Paragem.estacao] )
                 }
         }
     }
 
     suspend fun ler(id: Int): ParagemExposed? {
         return DButils.dbQuery {
-            (Paragem innerJoin Regiao).selectAll()
+            Paragem.selectAll()
                 .where { Paragem.id eq id } // Paragem.id == id // EQUALS
                 .map {
-                    val regiao = RegiaoExposed(
-                        it[Regiao.id],
-                        it[Regiao.nome],
-                        it[Regiao.abreviatura]
-                    )
                     ParagemExposed(it[Paragem.id], it[Paragem.nome],
-                        regiao,  it[Paragem.estacao] ) }
+                        it[Paragem.distrito],  it[Paragem.estacao] ) }
                 .singleOrNull()
         }
     }
@@ -86,6 +74,7 @@ class ParagemServico(database: Database) {
             Paragem.update({ Paragem.id eq id }) {
                 it[Paragem.nome] = paragem.nome
                 it[Paragem.estacao] = paragem.estacao
+                it[Paragem.distrito] = paragem.distrito
             }
         }
     }

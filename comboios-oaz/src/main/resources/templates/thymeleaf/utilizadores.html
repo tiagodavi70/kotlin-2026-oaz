@@ -1,0 +1,19 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Utilizadores</title>
+    <link rel="stylesheet" href="styles/style.css"/>
+</head>
+<body>
+
+    <div class="utilizador">
+        <div th:each="utilizador : ${lista}">
+            <span th:text="${utilizador.nome}"></span>
+            <span th:text="${utilizador.nif}"></span>
+        </div>
+    </div>
+
+</body>
+</html>
+

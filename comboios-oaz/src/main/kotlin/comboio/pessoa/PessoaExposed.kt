@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import pt.transporte.comboio.utils.DButils.dbQuery
 
 @Serializable
-data class PessoaExposed(val nome:String, val nif:String) {
+data class PessoaExposed(val id: Int, val nome:String, val nif:String) {
     init {
         require(nif.length == 9 && nif.toIntOrNull() != null) { "NIF tem que ter 9 posições" }
     }
@@ -21,6 +21,8 @@ class PessoaServico(database: Database) {
         val id = integer("id").autoIncrement()
         val nome = varchar("nome", 50)
         val nif = varchar("nif", 9)
+
+        override val primaryKey = PrimaryKey(id)
     }
 
     init {
@@ -41,7 +43,15 @@ class PessoaServico(database: Database) {
     suspend fun ler(): List<PessoaExposed> {
         return dbQuery {
             Pessoa.selectAll()
-                .map { PessoaExposed(it[Pessoa.nome], it[Pessoa.nif]) }
+                .map { PessoaExposed(it[Pessoa.id], it[Pessoa.nome], it[Pessoa.nif]) }
+        }
+    }
+    suspend fun ler(id: Int): PessoaExposed? {
+        return dbQuery {
+            Pessoa.selectAll()
+                .where { Pessoa.id eq id }
+                .map { PessoaExposed(it[Pessoa.id], it[Pessoa.nome], it[Pessoa.nif]) }
+                .singleOrNull()
         }
     }
 }

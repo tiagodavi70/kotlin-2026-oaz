@@ -9,13 +9,17 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
+import pt.transporte.comboio.linha.LinhaServico
 import pt.transporte.comboio.utils.DButils
 import pt.transporte.comboio.linha.ParagemExposed
 import pt.transporte.comboio.linha.ParagemServico
+import pt.transporte.comboio.viagem.ViagemServico
 
 fun Application.configureLinha() {
 
     val paragemServico = ParagemServico(DButils.database)
+    val linhaServico = LinhaServico(DButils.database)
+    val viagemServico = ViagemServico(DButils.database)
 
     routing {
         post("/paragem") {
@@ -38,7 +42,14 @@ fun Application.configureLinha() {
         }
 
         get("/paragem") {
-            call.respond(paragemServico.ler())
+            val paramsStr = call.queryParameters["viagem"]
+            if (paramsStr != null) {
+                val idViagem = paramsStr!!.toInt()
+                val idLinha = viagemServico.ler(idViagem)!!.id
+                call.respond(linhaServico.ler(idLinha)!!.paragens)
+            } else {
+                call.respond(paragemServico.ler())
+            }
         }
 
         get("/paragem/{id}") {

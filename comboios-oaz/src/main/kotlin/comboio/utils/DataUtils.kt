@@ -1,6 +1,7 @@
 package pt.transporte.comboio.utils
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.LocalDateTime
 import pt.transporte.comboio.comboio.ComboioExposed
 import pt.transporte.comboio.comboio.ComboioServico
 import pt.transporte.comboio.comboio.LugarExposed
@@ -11,11 +12,19 @@ import pt.transporte.comboio.linha.ParagemExposed
 import pt.transporte.comboio.linha.ParagemServico
 import pt.transporte.comboio.pessoa.PessoaExposed
 import pt.transporte.comboio.pessoa.PessoaServico
+import pt.transporte.comboio.viagem.BilheteExposed
+import pt.transporte.comboio.viagem.BilheteServico
+import pt.transporte.comboio.viagem.ReservaExposed
+import pt.transporte.comboio.viagem.ReservaServico
 import pt.transporte.comboio.viagem.ViagemExposed
 import pt.transporte.comboio.viagem.ViagemServico
+import java.io.File
 
 
 fun main() {
+
+    File("data/comboios.mv.db").delete()
+
     val paragensAveiro = listOf(
         ParagemExposed(-1, "Porto São Bento", "Porto", true),
         ParagemExposed(-1, "Porto Campanhã", "Porto", true),
@@ -45,11 +54,11 @@ fun main() {
         ParagemExposed(-1, "Aveiro", "Aveiro", true)
     )
     val utilizadores = listOf(
-        PessoaExposed("Tiago Araújo", "123456789"),
-        PessoaExposed("Maria Ferreira", "234567891"),
-        PessoaExposed("Pedro Costa", "345678912"),
-        PessoaExposed("Ana Martins", "456789123"),
-        PessoaExposed("Ricardo Sousa", "567891234")
+        PessoaExposed(-1, "Tiago Araújo", "123456789"),
+        PessoaExposed(-1, "Maria Ferreira", "234567891"),
+        PessoaExposed(-1, "Pedro Costa", "345678912"),
+        PessoaExposed(-1, "Ana Martins", "456789123"),
+        PessoaExposed(-1, "Ricardo Sousa", "567891234")
     )
 
     val linhaAveiro = LinhaExposed(-1, "Linha de Aveiro", paragensAveiro)
@@ -64,13 +73,15 @@ fun main() {
         LugarExposed(-1, assento, comboio)
     }
 
-
     val paragemServico = ParagemServico(DButils.database)
     val pessoaServico = PessoaServico(DButils.database)
     val linhaServico = LinhaServico(DButils.database)
     val lugarServico = LugarServico(DButils.database)
     val comboioServico = ComboioServico(DButils.database)
     val viagemServico = ViagemServico(DButils.database)
+
+    val reservaServico = ReservaServico(DButils.database)
+    val bilheteServico = BilheteServico(DButils.database)
 
     runBlocking {
         utilizadores.forEach { pessoaServico.criar(it) }
@@ -83,8 +94,57 @@ fun main() {
 
         val linha = linhaServico.ler(1)!!
         val comboio = comboioServico.ler(comboioId)!!
-        val viagens = listOf(ViagemExposed(-1, linha, comboio, 'I'))
+        val dataHora = LocalDateTime(2026,5,24,19,11,0,0)
+        val viagens = listOf(ViagemExposed(-1, linha, comboio, 'I', dataHora))
 
         viagens.forEach { viagemServico.criar(it) }
+
+        val viagem = viagemServico.ler(1)!!
+
+        val reservas = lugarServico.ler().shuffled().take(5).map {
+            ReservaExposed(viagem, it)
+        }
+
+        reservas.forEach { reservaServico.criar(it) }
+
+        println(reservaServico.ler())
+        val utilizadoresDB = pessoaServico.ler()
+        val reservasDB = reservaServico.ler()
+        val paragensDB = paragemServico.ler()
+
+        val bilhetes = listOf(
+            BilheteExposed(
+                utilizadoresDB[0], reservasDB[0],
+                paragensDB.first { it.nome == "Porto São Bento" },
+                paragensDB.first { it.nome == "Aveiro" }
+            ),
+
+            BilheteExposed(
+                utilizadoresDB[1], reservasDB[1],
+                paragensDB.first { it.nome == "Porto Campanhã" },
+                paragensDB.first { it.nome == "Ovar" }
+            ),
+
+            BilheteExposed(
+                utilizadoresDB[2], reservasDB[2],
+                paragensDB.first { it.nome == "Espinho" },
+                paragensDB.first { it.nome == "Aveiro" }
+            ),
+
+            BilheteExposed(
+                utilizadoresDB[3], reservasDB[3],
+                paragensDB.first { it.nome == "General Torres" },
+                paragensDB.first { it.nome == "Estarreja" }
+            ),
+
+            BilheteExposed(
+                utilizadoresDB[4], reservasDB[4],
+                paragensDB.first { it.nome == "Esmoriz" },
+                paragensDB.first { it.nome == "Aveiro" }
+            )
+        )
+
+        bilhetes.forEach { bilheteServico.criar(it) }
+        println(bilhetes)
     }
 }

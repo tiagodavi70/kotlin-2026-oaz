@@ -1,10 +1,12 @@
 package pt.transporte.comboio.viagem
 
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import pt.transporte.comboio.comboio.ComboioExposed
@@ -15,7 +17,8 @@ import pt.transporte.comboio.utils.DButils.dbQuery
 
 @Serializable
 data class ViagemExposed(val id: Int, val linha: LinhaExposed,
-    val comboio: ComboioExposed, val direcao: Char = 'I') // ida, volta, idasemapiadeiro, voltasemapieadiero
+    val comboio: ComboioExposed, val direcao: Char = 'I',
+    val dataHora: LocalDateTime) // ida, volta, idasemapiadeiro, voltasemapieadiero
 
 class ViagemServico(database: Database) {
     object Viagem: Table() {
@@ -23,6 +26,7 @@ class ViagemServico(database: Database) {
         val linha = reference("id_linha", Linha.id)
         val comboio = reference("id_comboio", Comboio.id)
         val direcao = char("direcao")
+        val dataHora = datetime("dataHora")
 
         override val primaryKey = PrimaryKey(id)
     }
@@ -40,6 +44,7 @@ class ViagemServico(database: Database) {
                 it[linha] = viagem.linha.id
                 it[direcao] = viagem.direcao
                 it[comboio] = viagem.comboio.id
+                it[dataHora] = viagem.dataHora
             }
         }
     }
@@ -53,7 +58,7 @@ class ViagemServico(database: Database) {
 
                     ViagemExposed(it[Viagem.id],
                         linha, comboio,
-                        it[Viagem.direcao])
+                        it[Viagem.direcao], it[Viagem.dataHora])
                 }
         }
     }
@@ -68,7 +73,7 @@ class ViagemServico(database: Database) {
 
                     ViagemExposed(it[Viagem.id],
                         linha, comboio,
-                        it[Viagem.direcao])
+                        it[Viagem.direcao], it[Viagem.dataHora])
                 }.singleOrNull()
         }
     }

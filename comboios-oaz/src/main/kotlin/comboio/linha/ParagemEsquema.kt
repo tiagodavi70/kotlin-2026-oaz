@@ -12,6 +12,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
 import pt.transporte.comboio.utils.DButils
+import pt.transporte.comboio.viagem.ViagemServico.Viagem
+import pt.transporte.comboio.linha.LinhaServico.Linha
+import pt.transporte.comboio.linha.LinhaServico.LinhaParagem
 
 @Serializable
 data class ParagemExposed(val id: Int, val nome: String,
@@ -66,6 +69,16 @@ class ParagemServico(database: Database) {
                     ParagemExposed(it[Paragem.id], it[Paragem.nome],
                         it[Paragem.distrito],  it[Paragem.estacao] ) }
                 .singleOrNull()
+        }
+    }
+
+    suspend fun lerViagem(idViagem: Int): List<ParagemExposed> {
+        return DButils.dbQuery {
+            (Paragem innerJoin Linha innerJoin LinhaParagem innerJoin Viagem) .selectAll()
+                .where { Viagem.id eq idViagem }
+                .map {
+                    ParagemExposed(it[Paragem.id], it[Paragem.nome],
+                        it[Paragem.distrito],  it[Paragem.estacao] ) }
         }
     }
 

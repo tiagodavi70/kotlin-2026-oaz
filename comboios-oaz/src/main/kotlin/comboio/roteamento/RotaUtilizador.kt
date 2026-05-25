@@ -14,9 +14,9 @@ import pt.transporte.comboio.pessoa.PessoaExposed
 fun Application.configureUtilizador() {
 
     val utilizadores = mutableListOf<PessoaExposed>(
-        PessoaExposed("Tiago", "9999999"),
-        PessoaExposed("Davi", "98989898"),
-        PessoaExposed("Izabella", "878787878")
+        PessoaExposed(-1, "Tiago", "9999999"),
+        PessoaExposed(-1, "Davi", "98989898"),
+        PessoaExposed(-1, "Izabella", "878787878")
     )
 
     routing {
@@ -44,7 +44,7 @@ fun Application.configureUtilizador() {
             val nif: String? = params["nif"]
 
             if (nome != null && nif != null) {
-                call.respond(PessoaExposed(nome, nif))
+                call.respond(PessoaExposed(-1, nome, nif))
             } else {
                 call.respond(HttpStatusCode.BadRequest)
             }
@@ -56,7 +56,7 @@ fun Application.configureUtilizador() {
             val nif: String? = params.get("nif")
 
             if (nome != null && nif != null) {
-                val pessoaExposed = PessoaExposed(nome, nif)
+                val pessoaExposed = PessoaExposed(-1, nome, nif)
                 utilizadores.add(pessoaExposed)
                 call.respond(HttpStatusCode.Created)
             }else {
@@ -73,7 +73,7 @@ fun Application.configureUtilizador() {
 
             if (nome != null && nif != null &&
                 id != null && id in 0..<utilizadores.size) {
-                utilizadores[id] = PessoaExposed(nome, nif)
+                utilizadores[id] = PessoaExposed(-1, nome, nif)
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(HttpStatusCode.BadRequest)

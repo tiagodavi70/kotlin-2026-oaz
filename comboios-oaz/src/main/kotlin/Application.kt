@@ -1,6 +1,7 @@
 package pt.transporte
 
 import io.ktor.server.application.*
+import pt.transporte.comboio.roteamento.configureBilhete
 import pt.transporte.comboio.roteamento.configureLinha
 import pt.transporte.comboio.roteamento.configurePessoa
 import pt.transporte.comboio.roteamento.configureUtilizador
@@ -19,4 +20,5 @@ fun Application.module() {
     //configureUtilizador()
     configureLinha()
     configurePessoa()
+    configureBilhete()
 }

@@ -18,8 +18,8 @@ import java.time.LocalTime
 
 fun Application.configurePessoa() {
 
-    val utilizador1 = PessoaExposed("Tiago", "999999")
-    val utilizador2 = PessoaExposed("Izabella", "888888")
+    val utilizador1 = PessoaExposed(-1, "Tiago", "123456789")
+    val utilizador2 = PessoaExposed(-1, "Izabella", "123456789")
     //val utilizadores = mutableListOf<UtilizadorExposed>(utilizador1, utilizador2)
 
     val pessoaServico = PessoaServico(DButils.database)
@@ -40,7 +40,7 @@ fun Application.configurePessoa() {
             val nome:String? = params["nome"]
             val nif:String? = params["nif"]
             if (nome != null && nif != null && nome != "" && nif != "") {
-                val novo_utilizador = PessoaExposed(nome, nif)
+                val novo_utilizador = PessoaExposed(-1, nome, nif)
                 pessoaServico.criar(novo_utilizador)
                 call.respondRedirect("/index.html")
             } else {

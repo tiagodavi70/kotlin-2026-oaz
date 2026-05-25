@@ -1,0 +1,47 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/bilhete" method="post">
+    <label for="utilizador">Utilizador: </label>
+    <select name="utilizador" id="utilizador">
+        <option th:each="utilizador: ${utilizadores}" th:value="${utilizador.id}" th:text="${utilizador.nome}"></option>
+    </select>
+
+    <label for="viagem">Viagem: </label>
+    <select name="viagem" id="viagem">
+        <option value="">Selecione uma viagem</option>
+        <option th:each="viagem: ${viagens}" th:value="${viagem.id}" th:text="|${viagem.linha.nome} - ${viagem.dataHora}|"></option>
+    </select>
+
+    <label for="paragemInicial">Partida: </label>
+    <select name="paragemInicial" id="paragemInicial" disabled>
+        <option value="">-- Selecione uma viagem primeiro -- </option>
+    </select>
+
+    <label for="paragemFinal">Chegada: </label>
+    <select name="paragemFinal" id="paragemFinal" disabled>
+        <option value="">-- Selecione uma viagem primeiro -- </option>
+    </select>
+
+    <label for="lugar">Lugar: </label>
+    <select name="lugar" id="lugar">
+        <option value="">-- Selecione uma viagem primeiro -- </option>
+    </select>
+
+    <button type="submit">Comprar bilhete</button>
+</form>
+
+<script src="src/dropdown.js"></script>
+<script>
+    setupDropdown("http://localhost:8080/lugaresDesocupados", "viagem", "lugar", "id", "assento")
+    setupDropdown("http://localhost:8080/paragem", "viagem", "paragemInicial", "id", "nome")
+    setupDropdown("http://localhost:8080/paragem", "viagem", "paragemFinal", "id", "nome")
+</script>
+</body>
+</html>
+

@@ -1,7 +1,7 @@
 
-function setupDropdown(url, nome1, nome2, id="id", nome="nome") {
-    const primeiroDropdown = document.getElementById(nome1);
-    const segundoDropdown = document.getElementById(nome2);
+function setupDropdown(url, domNome1, domNome2, id="id", nome="nome") {
+    const primeiroDropdown = document.getElementById(domNome1);
+    const segundoDropdown = document.getElementById(domNome2);
 
     primeiroDropdown.addEventListener("change", async function () {
         const selecao = this.value;
@@ -15,8 +15,9 @@ function setupDropdown(url, nome1, nome2, id="id", nome="nome") {
         }
 
         try {
-            const resposta = await fetch(url);
+            const resposta = await fetch(url + "?" + domNome1 + "=" + selecao);
             const data = await resposta.json();
+
 
             segundoDropdown.innerHTML = '<option value="">Selecione um item</option>';
 
@@ -26,6 +27,7 @@ function setupDropdown(url, nome1, nome2, id="id", nome="nome") {
                 option.textContent = item[nome];
                 segundoDropdown.appendChild(option);
             });
+            segundoDropdown.disabled = false;
         } catch (error) {
             console.error("Erro:", error);
             segundoDropdown.innerHTML = '<option value="">Erro carregando</option>';

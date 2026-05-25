@@ -57,7 +57,7 @@ class ReservaServico(database: Database) {
                         .map { v ->
                             val linha = LinhaExposed(v[Linha.id], v[Linha.nome])
                             ViagemExposed(v[Viagem.id],
-                            linha, comboio, v[Viagem.direcao]) }
+                            linha, comboio, v[Viagem.direcao], v[Viagem.dataHora]) }
                         .single()
 
                     val lugar = LugarExposed(it[Lugar.id],
